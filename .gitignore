@@ -1,5 +1,8 @@
 *.class
 
+#BenYehuda Files
+BenYehuda/
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
