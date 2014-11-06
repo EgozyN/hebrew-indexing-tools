@@ -12,7 +12,6 @@ import java.util.zip.ZipFile;
  * Created by Egozy on 29/10/2014.
  */
 public class BenYehudaParser {
-    private BenYehudaPage currentPage = null;
     private ZipFile zip = null;
     private BenYehudaHandler handler = null;
 

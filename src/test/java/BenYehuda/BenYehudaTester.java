@@ -11,7 +11,7 @@ import java.io.IOException;import java.lang.String;import java.lang.System;
  */
 public class BenYehudaTester {
 
-    @Test
+//    @Test
     public void test() throws Exception {
         BenYehudaParser parser = new BenYehudaParser("./ProjectBenYehuda_Dump.zip");
         parser.setPageCallBack(new BenYehudaHandler() {

@@ -2,7 +2,10 @@
 target/
 
 #BenYehuda Files
-BenYehuda/
+/BenYehuda/
+
+#News Files
+/News/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
