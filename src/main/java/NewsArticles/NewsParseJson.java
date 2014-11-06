@@ -1,50 +1,87 @@
 package NewsArticles;
 
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Egozy on 06/11/2014.
  */
 public class NewsParseJson {
     public static NewsPage getNewsPageFromJson(InputStream is) throws IOException {
-        String title, author, content;
-        int id;
+        NewsPage page = new NewsPage();
         JsonReader reader = new JsonReader(new InputStreamReader(is, "UTF-8"));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
         reader.beginObject();
         assert (reader.nextName().equals("post_number"));
-        id = reader.nextInt();
+        page.setPostNum(reader.nextInt());
         assert (reader.nextName().equals("crawl_date"));
-        reader.skipValue();
+        try {
+            page.setCrawlDate(dateFormat.parse(reader.nextString()));
+        } catch (ParseException e) {
+            //TODO
+            page.setCrawlDate(null);
+        }
         assert (reader.nextName().equals("topic_url"));
-        reader.skipValue();
+        page.setTopic_url(reader.nextString());
         assert (reader.nextName().equals("text"));
-        content = reader.nextString();
+        page.setText(reader.nextString());
         assert (reader.nextName().equals("site"));
-        reader.skipValue();
+        if (reader.peek() == JsonToken.BEGIN_ARRAY) {
+            reader.beginArray();
+            List<String> sites = new LinkedList<String>();
+            while (reader.hasNext()) {
+                sites.add(reader.nextString());
+            }
+            reader.endArray();
+        } else {
+            page.setSite(new String[]{reader.nextString()});
+
+        }
         assert (reader.nextName().equals("datetime"));
-        reader.skipValue();
+        try {
+            page.setDatetime(dateFormat.parse(reader.nextString()));
+        } catch (ParseException e) {
+            //TODO
+            page.setCrawlDate(null);
+        }
         assert (reader.nextName().equals("likes"));
+        //TODO
         reader.skipValue();
         assert (reader.nextName().equals("reported_replies_count"));
-        reader.skipValue();
+        page.setReportedRepliesCount(reader.nextInt());
         assert (reader.nextName().equals("title"));
-        title = reader.nextString();
+        page.setTitle(reader.nextString());
         assert (reader.nextName().equals("url"));
-        reader.skipValue();
+        page.setUrl(reader.nextString());
         assert (reader.nextName().equals("author"));
-        author = reader.nextString();
+        page.setAuthor(reader.nextString());
         assert (reader.nextName().equals("shares"));
-        reader.skipValue();
+        reader.skipValue(); //TODO
         assert (reader.nextName().equals("category_url"));
-        reader.skipValue();
+        page.setCategory_url(nextStringOrNull(reader));
         assert (reader.nextName().equals("type"));
-        reader.skipValue();
+        page.setType(reader.nextString());
         assert (reader.nextName().equals("category_title"));
-        reader.skipValue();
-        return new NewsPage(title, author, content, id);
+        page.setCategory_title(nextStringOrNull(reader));
+        reader.endObject();
+        reader.close();
+        return page;
+    }
+
+    private static String nextStringOrNull(JsonReader reader) throws IOException {
+        if (reader.peek() == JsonToken.NULL){
+            reader.skipValue();
+            return "null";
+        }else{
+            return reader.nextString();
+        }
     }
 }
