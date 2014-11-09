@@ -1,8 +1,11 @@
 *.class
 target/
 
+#IDEA files
+/.idea/
+
 #BenYehuda Files
-/BenYehuda/
+ProjectBenYehuda_Dump.zip
 
 #News Files
 /News/
