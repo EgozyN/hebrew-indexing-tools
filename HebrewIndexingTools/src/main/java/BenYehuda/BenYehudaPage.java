@@ -20,7 +20,7 @@ public class BenYehudaPage {
         return extra;
     }
 
-    String title, author, content, extra;
+    private String title, author, content, extra;
 
     public BenYehudaPage(String title, String author, String content, String extra) {
         this.title = title;

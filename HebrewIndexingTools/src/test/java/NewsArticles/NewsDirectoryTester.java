@@ -8,7 +8,7 @@ import java.io.IOException;
  * Created by Egozy on 06/11/2014.
  */
 public class NewsDirectoryTester {
-    @Test
+//    @Test
     public void simpleTestSingleDir() throws IOException {
         final Counter counter = new Counter();
         NewsDirectoryParser parser = new NewsDirectoryParser("./News/",
