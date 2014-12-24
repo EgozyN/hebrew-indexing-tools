@@ -32,6 +32,7 @@ public class NewsZipParser {
                 handler.process(page);
             }
         }
+        handler.finishRemaining();
     }
 
     public int getNumOfEntries() {

@@ -1,5 +1,10 @@
 package NewsArticles;
 
+import org.elasticsearch.client.Client;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -22,4 +27,10 @@ public class NewsDirectoryTester {
         System.out.println(parser.getTotalFiles());
         assert (counter.getNum() == parser.getTotalFiles());
     }
+
+        @Test
+    public void testDirectoryIndexer() throws IOException {
+        NewsIndexer.indexDirectory("./News/", "10.0.0.5",9300);
+    }
+
 }

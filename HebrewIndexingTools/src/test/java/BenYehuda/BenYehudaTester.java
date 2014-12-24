@@ -1,10 +1,5 @@
 package BenYehuda;
 
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.junit.Test;
 
 /**
@@ -24,16 +19,8 @@ public class BenYehudaTester {
         parser.parse();
     }
 
-//    @Test
+    @Test
     public void testIndex() throws Exception {
-        //Create Client
-        Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", "egozy").build();
-        TransportClient transportClient = new TransportClient(settings);
-        transportClient = transportClient.addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
-        Client client = (Client) transportClient;
-        BenYehudaParser parser = new BenYehudaParser("./ProjectBenYehuda_Dump.zip");
-        parser.setPageCallBack(new BenYehudaCallBackIndexer(client, "benyehuda"));
-        parser.parse();
+        BenYehudaIndexer.indexZip("./ProjectBenYehuda_Dump.zip", "10.0.0.5",9300);
     }
-
 }

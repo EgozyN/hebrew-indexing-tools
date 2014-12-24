@@ -83,5 +83,4 @@ public class WikiXMLSAXParser extends WikiXMLParser {
         wxsp.setPageCallback(handler);
         wxsp.parse();
     }
-
 }

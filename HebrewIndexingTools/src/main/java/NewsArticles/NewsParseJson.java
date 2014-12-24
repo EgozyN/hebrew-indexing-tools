@@ -40,10 +40,12 @@ public class NewsParseJson {
             while (reader.hasNext()) {
                 sites.add(reader.nextString());
             }
+            String[] sitesArray = {};
+            sitesArray = sites.toArray(sitesArray);
+            page.setSite(sitesArray);
             reader.endArray();
         } else {
             page.setSite(new String[]{reader.nextString()});
-
         }
         assert (reader.nextName().equals("datetime"));
         try {

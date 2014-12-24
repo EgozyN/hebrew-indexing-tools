@@ -28,14 +28,8 @@ public class NewsZipTester {
         assert (parser.getNumOfEntries() == 875);
     }
 
-    @Test
-    public void testIndexer() throws IOException {
-        //Create Client
-        Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", "egozy").build();
-        TransportClient transportClient = new TransportClient(settings);
-        transportClient = transportClient.addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
-        Client client = (Client) transportClient;
-        NewsZipParser parser = new NewsZipParser(getClass().getResource("/063633016.zip").getPath(), new NewsCallBackIndexer(client, "news"));
-        parser.parse();
-    }
+    //    @Test
+//    public void testZipIndexer() throws IOException {
+//        NewsIndexer.indexZip(getClass().getResource("/063633016.zip").getPath());
+//    }
 }

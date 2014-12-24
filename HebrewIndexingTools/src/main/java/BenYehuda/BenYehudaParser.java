@@ -42,6 +42,7 @@ public class BenYehudaParser {
                 handler.process(page);
             }
         }
+        handler.finishRemaining();
     }
 
     public static BenYehudaPage getPublish(InputStream stream) throws IOException {
