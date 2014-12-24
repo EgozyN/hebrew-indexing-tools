@@ -17,7 +17,7 @@ public class WikiTextParser
     private HashSet<String> pageLinks = null;
     private boolean redirect = false;
     private String redirectString = null;
-    private static Pattern redirectPattern = Pattern.compile("#REDIRECT\\s*\\[\\[(.*?)\\]\\]", Pattern.CASE_INSENSITIVE);
+    private static Pattern redirectPattern = Pattern.compile("(#REDIRECT|#הפנייה)\\s*\\[\\[(.*?)\\]\\]", Pattern.CASE_INSENSITIVE);
     private boolean stub = false;
     private boolean disambiguation = false;
     private static Pattern stubPattern = Pattern.compile("\\-stub\\}\\}", Pattern.CASE_INSENSITIVE);
