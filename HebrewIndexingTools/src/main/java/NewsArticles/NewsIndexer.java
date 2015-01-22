@@ -26,6 +26,7 @@ public class NewsIndexer {
         final XContentBuilder mappingBuilder = jsonBuilder().startObject().startObject("properties")
                 .startObject("text").field("type", "string").field("analyzer", "hebrew").endObject()
                 .startObject("title").field("type", "string").field("analyzer", "hebrew").endObject()
+                .startObject("author").field("type", "string").field("index","not_analyzed").endObject()
                 .endObject().endObject();
         System.out.println(mappingBuilder.string());
         createIndexRequestBuilder.addMapping("document", mappingBuilder);

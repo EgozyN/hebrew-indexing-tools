@@ -20,20 +20,20 @@ public class NewsParseJson {
         JsonReader reader = new JsonReader(new InputStreamReader(is, "UTF-8"));
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
         reader.beginObject();
-        assert (reader.nextName().equals("post_number"));
+        assertNextNameEquals(reader, "post_number");
         page.setPostNum(reader.nextInt());
-        assert (reader.nextName().equals("crawl_date"));
+        assertNextNameEquals(reader, "crawl_date");
         try {
             page.setCrawlDate(dateFormat.parse(reader.nextString()));
         } catch (ParseException e) {
             //TODO
             page.setCrawlDate(null);
         }
-        assert (reader.nextName().equals("topic_url"));
+        assertNextNameEquals(reader, "topic_url");
         page.setTopic_url(reader.nextString());
-        assert (reader.nextName().equals("text"));
+        assertNextNameEquals(reader, "text");
         page.setText(reader.nextString());
-        assert (reader.nextName().equals("site"));
+        assertNextNameEquals(reader, "site");
         if (reader.peek() == JsonToken.BEGIN_ARRAY) {
             reader.beginArray();
             List<String> sites = new LinkedList<String>();
@@ -47,37 +47,42 @@ public class NewsParseJson {
         } else {
             page.setSite(new String[]{reader.nextString()});
         }
-        assert (reader.nextName().equals("datetime"));
+        assertNextNameEquals(reader, "datetime");
         try {
             page.setDatetime(dateFormat.parse(reader.nextString()));
         } catch (ParseException e) {
             //TODO
             page.setCrawlDate(null);
         }
-        assert (reader.nextName().equals("likes"));
+        assertNextNameEquals(reader, "likes");
         //TODO
         reader.skipValue();
-        assert (reader.nextName().equals("reported_replies_count"));
+        assertNextNameEquals(reader, "reported_replies_count");
         page.setReportedRepliesCount(reader.nextInt());
-        assert (reader.nextName().equals("title"));
+        assertNextNameEquals(reader, "title");
         page.setTitle(reader.nextString());
-        assert (reader.nextName().equals("url"));
+        assertNextNameEquals(reader, "url");
         page.setUrl(reader.nextString());
-        assert (reader.nextName().equals("author"));
+        assertNextNameEquals(reader, "author");
         page.setAuthor(reader.nextString());
-        assert (reader.nextName().equals("shares"));
+        assertNextNameEquals(reader, "shares");
         reader.skipValue(); //TODO
-        assert (reader.nextName().equals("category_url"));
+        assertNextNameEquals(reader, "category_url");
         page.setCategory_url(nextStringOrNull(reader));
-        assert (reader.nextName().equals("type"));
+        assertNextNameEquals(reader, "type");
         page.setType(reader.nextString());
-        assert (reader.nextName().equals("category_title"));
+        assertNextNameEquals(reader, "category_title");
         page.setCategory_title(nextStringOrNull(reader));
         reader.endObject();
         reader.close();
         return page;
     }
 
+    private static void assertNextNameEquals(JsonReader reader, String text) throws IOException {
+        if (!reader.nextName().equals(text)){
+            throw new IllegalArgumentException();
+        }
+    }
     private static String nextStringOrNull(JsonReader reader) throws IOException {
         if (reader.peek() == JsonToken.NULL){
             reader.skipValue();
