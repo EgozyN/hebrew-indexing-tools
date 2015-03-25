@@ -41,6 +41,5 @@
     <orderEntry type="library" name="Maven: org.ow2.asm:asm:4.1" level="project" />
     <orderEntry type="library" name="Maven: org.ow2.asm:asm-commons:4.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:4.10.3" level="project" />
-    <orderEntry type="library" name="Maven: com.code972.hebmorph:hebmorph-lucene:2.0-SNAPSHOT" level="project" />
   </component>
 </module>
