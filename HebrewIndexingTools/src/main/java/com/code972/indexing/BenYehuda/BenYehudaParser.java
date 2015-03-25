@@ -1,4 +1,4 @@
-package BenYehuda;
+package com.code972.indexing.BenYehuda;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

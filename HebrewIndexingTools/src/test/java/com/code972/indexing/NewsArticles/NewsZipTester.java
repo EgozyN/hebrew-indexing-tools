@@ -1,12 +1,5 @@
-package NewsArticles;
+package com.code972.indexing.NewsArticles;
 
-import BenYehuda.BenYehudaCallBackIndexer;
-import BenYehuda.BenYehudaParser;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.junit.Test;
 
 import java.io.IOException;

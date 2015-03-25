@@ -1,4 +1,4 @@
-package NewsArticles;
+package com.code972.indexing.NewsArticles;
 
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;

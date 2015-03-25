@@ -1,4 +1,4 @@
-package BenYehuda;
+package com.code972.indexing.BenYehuda;
 
 /**
  * Created by Egozy on 29/10/2014.
