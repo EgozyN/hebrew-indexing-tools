@@ -18,9 +18,4 @@ public class BenYehudaTester {
         });
         parser.parse();
     }
-
-    @Test
-    public void testIndex() throws Exception {
-        BenYehudaIndexer.indexZip("./ProjectBenYehuda_Dump.zip", "10.0.0.5",9300);
-    }
 }

@@ -28,9 +28,5 @@ public class NewsDirectoryTester {
         assert (counter.getNum() == parser.getTotalFiles());
     }
 
-        @Test
-    public void testDirectoryIndexer() throws IOException {
-        NewsIndexer.indexDirectory("./News/", "10.0.0.5",9300);
-    }
 
 }

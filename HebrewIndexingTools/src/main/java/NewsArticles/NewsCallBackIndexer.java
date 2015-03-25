@@ -40,7 +40,15 @@ public class NewsCallBackIndexer extends NewsHandler {
             builder.field("type", page.getType());
             builder.field("url", page.getUrl());
             builder.field("text", page.getText());
-            builder.array("sites", page.getSites());
+            builder.startArray("sites");
+            for (String s : page.getSites()) {
+                builder.value(s);
+            }
+            builder.endArray();
+//            if (!page.getCategory_title().equals("null"))
+//            {
+//                builder.field("category",page.getCategory_title());
+//            }
             builder.endObject();
             currentRequest.add(client.prepareIndex(indexName, "document").setCreate(false).setSource(builder));
             processBulkIfNeeded();

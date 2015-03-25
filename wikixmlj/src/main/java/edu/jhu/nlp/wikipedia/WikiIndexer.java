@@ -10,7 +10,9 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Arrays;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
@@ -18,8 +20,8 @@ import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
  * Created by Egozy on 28/11/2014.
  */
 public class WikiIndexer {
-    public static void indexDump(String dumpPath, String serverAddress, int serverPort) throws Exception {
-        Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", "egozy").build();
+    public static void indexDump(String dumpPath, String serverAddress, int serverPort, String clusterName) throws Exception {
+        Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", clusterName).build();
         TransportClient transportClient = new TransportClient(settings);
         transportClient = transportClient.addTransportAddress(new InetSocketTransportAddress(serverAddress, serverPort));
         Client client = transportClient;
@@ -51,5 +53,13 @@ public class WikiIndexer {
         }catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * * 
+     * @param args wikiZipFile, elasticsearchServerAddress, elasticSearchTransportIp, clusterName
+     */
+    public static void main(String[] args) throws Exception {
+        WikiIndexer.indexDump(args[0], args[1], Integer.parseInt(args[2]), args[3]);
     }
 }
