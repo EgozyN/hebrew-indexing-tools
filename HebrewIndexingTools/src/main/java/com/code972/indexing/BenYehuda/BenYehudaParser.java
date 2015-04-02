@@ -46,7 +46,8 @@ public class BenYehudaParser {
         handler.finishRemaining();
     }
 
-    // known classes to ignore: proof-panel, recommend-panel, donate-banner
+    // known ids to ignore: donate-banner, proof-form-wrap, recommend-form-wrap
+    // known classes to ignore: proof-panel, recommend-panel
     // other classes: MsoNormal, msocomtxt, Section1-4, WordSection1-3
     public static BenYehudaPage getPublish(InputStream stream) throws IOException {
         Document doc = Jsoup.parse(stream, null, "");
@@ -55,7 +56,7 @@ public class BenYehudaParser {
         String author = (title.length > 1) ? title[1].trim() : null;
         String extra = (title.length > 2) ? title[2].trim() : null;
         Elements divs = doc.select("div");
-        divs = divs.not(".proof-panel").not(".recommend-panel").not(".donate-banner");
+        divs = divs.not("#donate-banner").not(".proof-panel").not("#proof-form-wrap").not(".recommend-panel").not("#recommend-form-wrap");
         return new BenYehudaPage(topic, author, divs.text(), extra);
     }
 }
