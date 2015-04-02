@@ -25,7 +25,7 @@ public class BenYehudaIndexer {
                 .endObject().endObject();
         System.out.println(mappingBuilder.string());
         createIndexRequestBuilder.addMapping("document", mappingBuilder);
-        System.out.println(createIndexRequestBuilder.execute().actionGet());
+        createIndexRequestBuilder.execute().actionGet();
         BenYehudaParser parser = new BenYehudaParser(dumpFile);
         BenYehudaHandler handler = new BenYehudaCallBackIndexer(client, "benyehuda");
         parser.setPageCallBack(handler);
@@ -33,10 +33,9 @@ public class BenYehudaIndexer {
     }
     /**
      * *
-     * @param args benYehudaFolder, elasticsearchServerAddress, elasticSearchTransportIp, clusterName
+     * @param args benYehudaZip, elasticsearchServerAddress, elasticSearchTransportIp, clusterName
      */
     public static void main(String[] args) throws Exception {
-//        indexZip("./ProjectBenYehuda_Dump.zip", "hebmorph-demo.cloudapp.net", 9300, "hebmorph-demo");
         indexZip(args[0],args[1],Integer.parseInt(args[2]),args[3]);
    }
 }
