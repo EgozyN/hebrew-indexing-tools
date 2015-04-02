@@ -56,7 +56,7 @@ public class BenYehudaParser {
         String author = (title.length > 1) ? title[1].trim() : null;
         String extra = (title.length > 2) ? title[2].trim() : null;
         Elements divs = doc.select("div");
-        divs = divs.not("#donate-banner").not(".proof-panel").not("#proof-form-wrap").not(".recommend-panel").not("#recommend-form-wrap");
+        divs = divs.not("#donate-banner,.proof-panel,#proof-form-wrap,.recommend-panel,#recommend-form-wrap");
         return new BenYehudaPage(topic, author, divs.text(), extra);
     }
 }

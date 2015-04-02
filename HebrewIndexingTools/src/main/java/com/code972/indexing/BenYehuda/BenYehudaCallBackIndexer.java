@@ -17,7 +17,7 @@ public class BenYehudaCallBackIndexer extends BenYehudaHandler {
     private final Client client;
     private final String indexName;
     private BulkRequestBuilder currentRequest;
-    private static int bulkSize = 100;
+    private static int bulkSize = 25;
     private static final AtomicInteger onGoingBulks = new AtomicInteger();
     private int allowedConcurrentBulks = 3;
 
@@ -55,15 +55,16 @@ public class BenYehudaCallBackIndexer extends BenYehudaHandler {
         if (currentRequest.numberOfActions() >= bulkSize) {
             // execute the bulk operation
             int currentOnGoingBulks = onGoingBulks.incrementAndGet();
-            if (currentOnGoingBulks > allowedConcurrentBulks) {
+            while (currentOnGoingBulks > allowedConcurrentBulks) {
                 // TODO, just wait here!, we can slow down the wikipedia parsing
 //                logger.warn(String.format("dropping bulk, [%d] crossed threshold [%d]", onGoingBulks.get(), allowedConcurrentBulks));
                 System.out.println(String.format("dropping bulk, [%d] crossed threshold [%d]", onGoingBulks.get(), allowedConcurrentBulks));
                 try {
-                    Thread.sleep(6000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     Thread.interrupted();
                 }
+                currentOnGoingBulks = onGoingBulks.get();
             }
             try {
                 currentRequest.execute(new ActionListener<BulkResponse>() {
