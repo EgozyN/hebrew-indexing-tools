@@ -3,12 +3,12 @@ package com.code972.indexing.NewsArticles;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 
 import java.io.IOException;
+import java.net.InetAddress;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
@@ -17,8 +17,9 @@ import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
  */
 public class NewsIndexer {
     public static void indexDirectory(String dirPath, String serverAddress, int serverPort, String clusterName) throws IOException {
-        Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", clusterName).build();
-        Client client = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress(serverAddress, serverPort));
+        Settings settings = Settings.settingsBuilder().put("cluster.name", clusterName).build();
+        Client client = TransportClient.builder().settings(settings).build().
+                addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(serverAddress), serverPort));
         final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate("news");
         final XContentBuilder mappingBuilder = jsonBuilder().startObject().startObject("properties")
                 .startObject("text").field("type", "string").field("analyzer", "hebrew").endObject()

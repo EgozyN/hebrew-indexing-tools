@@ -60,7 +60,7 @@ public class BenYehudaCallBackIndexer extends BenYehudaHandler {
 //                logger.warn(String.format("dropping bulk, [%d] crossed threshold [%d]", onGoingBulks.get(), allowedConcurrentBulks));
                 System.out.println(String.format("dropping bulk, [%d] crossed threshold [%d]", onGoingBulks.get(), allowedConcurrentBulks));
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     Thread.interrupted();
                 }

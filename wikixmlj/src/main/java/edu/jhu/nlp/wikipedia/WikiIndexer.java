@@ -3,7 +3,6 @@ package edu.jhu.nlp.wikipedia;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -11,6 +10,7 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.util.Arrays;
 
@@ -21,10 +21,9 @@ import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
  */
 public class WikiIndexer {
     public static void indexDump(String dumpPath, String serverAddress, int serverPort, String clusterName) throws Exception {
-        Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", clusterName).build();
-        TransportClient transportClient = new TransportClient(settings);
-        transportClient = transportClient.addTransportAddress(new InetSocketTransportAddress(serverAddress, serverPort));
-        Client client = transportClient;
+        Settings settings = Settings.settingsBuilder().put("cluster.name", clusterName).build();
+        Client client = TransportClient.builder().settings(settings).build().
+                addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(serverAddress), serverPort));
 
         final CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate("wiki");
         final XContentBuilder mappingBuilder = jsonBuilder().startObject().startObject("properties")

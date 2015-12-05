@@ -4,7 +4,6 @@ import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.common.base.Strings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 
@@ -41,7 +40,7 @@ public class WikiCallBackIndexer implements PageCallbackHandler {
             builder.field("text", page.getText());
 
             if (page.isRedirect()) {
-                if (!Strings.isNullOrEmpty(page.getRedirectPage()))
+                if (!(page.getRedirectPage()==null || page.getRedirectPage().equals("")))
                     builder.field("redirect", page.getRedirectPage());
                 else
                     builder.field("redirect", "#");
